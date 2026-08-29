@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>This Is What the City Sounds Like | Hit James</title>
+<meta name="description" content="Hit James presents &quot;This Is What the City Sounds Like,&quot; a musical snapshot of traffic, culture, pressure, pride and everyday life in Atlanta.">
+<meta property="og:title" content="This Is What the City Sounds Like — Vol. 1">
+<meta property="og:description" content="Hit James presents a musical snapshot of traffic, culture, pressure, pride and everyday life in Atlanta.">
+<meta property="og:image" content="images/project-cover.jpg">
+<meta property="og:type" content="website">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Fraunces:ital,wght@0,600;1,500;1,600&family=IBM+Plex+Mono:wght@500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --bg:#0a0a0a;
+    --paper:#f2ede2;
+    --card:#151515;
+    --line:#2b2b2b;
+    --text:#f2ede2;
+    --muted:#8a8378;
+    --red:#dd1223;
+    --gold:#e3a83d;
+    --display:'Archivo Black', sans-serif;
+    --serif:'Fraunces', serif;
+    --body:'IBM Plex Sans', sans-serif;
+    --mono:'IBM Plex Mono', monospace;
+  }
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  html{ scroll-behavior:smooth; }
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:var(--body);
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  img{ max-width:100%; display:block; }
+  a{ color:inherit; text-decoration:none; }
+  ::selection{ background:var(--red); color:var(--paper); }
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration:0.001ms !important; animation-iteration-count:1 !important; scroll-behavior:auto !important; }
+  }
+  a:focus-visible, button:focus-visible, input:focus-visible{
+    outline:2px solid var(--gold); outline-offset:3px;
+  }
+
+  /* subtle halftone texture on dark sections */
+  .halftone{
+    background-image: radial-gradient(rgba(242,237,226,0.05) 1px, transparent 1px);
+    background-size:6px 6px;
+  }
+
+  /* ---------- MASTHEAD ---------- */
+  .masthead{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:16px 20px;
+    max-width:1240px; margin:0 auto;
+  }
+  .masthead-logo{
+    font-family:var(--display);
+    font-size:22px;
+    letter-spacing:-0.01em;
+  }
+  .masthead-logo .dot{ color:var(--red); }
+  .masthead-meta{
+    font-family:var(--mono);
+    font-size:10px;
+    letter-spacing:0.1em;
+    color:var(--muted);
+    text-transform:uppercase;
+    text-align:right;
+  }
+  .masthead-rule{
+    height:4px;
+    background:var(--red);
+  }
+
+  /* ---------- PRIMARY NAV ---------- */
+  .primary-nav{
+    border-bottom:1px solid var(--line);
+    padding:12px 20px;
+    max-width:1240px; margin:0 auto;
+    display:flex; gap:22px; flex-wrap:wrap;
+    font-family:var(--mono);
+    font-size:11px;
+    font-weight:600;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+  }
+  .primary-nav a{ color:var(--muted); transition:color 0.15s ease; }
+  .primary-nav a:hover{ color:var(--gold); }
+  .primary-nav a.nav-emphasis{ color:var(--gold); }
+
+  /* ---------- BREAKING BAR (signature ticker, restyled) ---------- */
+  .breaking-bar{
+    background:var(--bg);
+    border-bottom:1px solid var(--line);
+    overflow:hidden;
+    white-space:nowrap;
+  }
+  .breaking-track{
+    display:inline-flex;
+    animation:scroll 30s linear infinite;
+    will-change:transform;
+  }
+  .breaking-track span{
+    font-family:var(--mono);
+    font-size:11px;
+    font-weight:600;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    padding:9px 26px;
+    white-space:nowrap;
+    border-right:1px solid var(--line);
+    color:var(--muted);
+  }
+  .breaking-track span.hot{ color:var(--red); }
+  @keyframes scroll{ from{transform:translateX(0);} to{transform:translateX(-50%);} }
+
+  /* ---------- CONTENTS STRIP ---------- */
+  .contents-strip{
+    border-bottom:1px solid var(--line);
+    padding:12px 20px;
+    max-width:1240px; margin:0 auto;
+    display:flex; gap:18px; flex-wrap:wrap;
+    font-family:var(--mono);
+    font-size:10px;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    color:var(--muted);
+  }
+  .contents-strip a:hover{ color:var(--gold); }
+  .contents-strip .in-issue{ color:var(--text); font-weight:600; }
+
+  /* ---------- HERO / COVER ---------- */
+  .cover{
+    position:relative;
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    justify-content:flex-end;
+    padding:0 20px 40px;
+  }
+  .cover-bg{
+    position:absolute; inset:0;
+    background-image:url('images/trooper-hero.jpg');
+    background-size:cover;
+    background-position:center 25%;
+  }
+  .cover-overlay{
+    position:absolute; inset:0;
+    background:
+      linear-gradient(180deg, rgba(10,10,10,0.05) 0%, rgba(10,10,10,0.35) 40%, rgba(10,10,10,0.97) 92%),
+      linear-gradient(100deg, rgba(10,10,10,0.85) 0%, rgba(10,10,10,0) 55%);
+  }
+  .cover-blurbs{
+    position:relative; z-index:2;
+    display:flex; flex-direction:column; gap:6px;
+    align-items:flex-end;
+    text-align:right;
+    padding-top:24px;
+    max-width:1240px; margin:0 auto; width:100%;
+  }
+  .cover-blurbs span{
+    font-family:var(--serif);
+    font-style:italic;
+    font-weight:600;
+    font-size:15px;
+    color:var(--gold);
+  }
+  .cover-content{
+    position:relative; z-index:2;
+    max-width:1240px; margin:0 auto; width:100%;
+  }
+  .kicker{
+    display:inline-flex; align-items:center; gap:8px;
+    font-family:var(--mono); font-size:11px; font-weight:600;
+    letter-spacing:0.14em; text-transform:uppercase; color:var(--red);
+    margin-bottom:14px;
+  }
+  .kicker::before{ content:"—"; color:var(--red); }
+  .cover h1{
+    font-family:var(--display);
+    font-size:clamp(2.2rem, 8.4vw, 5.2rem);
+    line-height:0.96;
+    text-transform:uppercase;
+    max-width:17ch;
+    text-wrap:balance;
+  }
+  .cover-vol{
+    display:block;
+    font-family:var(--serif);
+    font-style:italic;
+    font-weight:600;
+    font-size:clamp(1.1rem, 2.6vw, 1.5rem);
+    color:var(--gold);
+    margin-top:8px;
+    letter-spacing:0.02em;
+  }
+  .cover-sub{
+    margin-top:20px;
+    font-size:clamp(1rem, 2.3vw, 1.2rem);
+    color:var(--text);
+    max-width:44ch;
+    font-weight:400;
+  }
+  .cover-support{
+    margin-top:10px;
+    font-size:0.95rem;
+    color:var(--muted);
+    max-width:46ch;
+  }
+  .cover-ctas{
+    margin-top:30px; display:flex; flex-wrap:wrap; gap:14px; align-items:center;
+  }
+  .cover-discovery{
+    margin-top:16px;
+    font-family:var(--mono);
+    font-size:11px;
+    font-weight:600;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:var(--muted);
+  }
+  .cover-discovery a{ color:var(--gold); border-bottom:1px solid rgba(227,168,61,0.4); }
+  .cover-discovery a:hover{ color:#f3c264; }
+  .lead-line{
+    font-family:var(--serif);
+    font-style:italic;
+    font-weight:500;
+    font-size:1.1rem;
+    color:var(--gold);
+    margin-top:8px;
+  }
+  .cover-issue-tag{
+    margin-top:34px;
+    display:flex; align-items:center; gap:14px;
+    font-family:var(--mono); font-size:10px; letter-spacing:0.1em;
+    color:var(--muted); text-transform:uppercase;
+  }
+  .barcode{
+    display:flex; gap:2px; align-items:flex-end; height:22px;
+  }
+  .barcode i{
+    display:block; width:2px; background:var(--muted); height:100%;
+  }
+  .barcode i:nth-child(3n){ height:70%; }
+  .barcode i:nth-child(5n){ height:85%; }
+
+  /* ---------- BUTTONS ---------- */
+  .btn{
+    display:inline-flex; align-items:center; justify-content:center; gap:10px;
+    font-family:var(--body); font-weight:700; font-size:15px;
+    letter-spacing:0.01em; padding:16px 26px; border-radius:2px;
+    border:2px solid transparent; cursor:pointer; min-height:52px;
+    transition:transform 0.15s ease, background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+  }
+  .btn:active{ transform:scale(0.97); }
+  .btn-primary{ background:var(--red); color:var(--paper); }
+  .btn-primary:hover{ background:#ff2d3c; }
+  .btn-outline{ background:transparent; color:var(--text); border-color:rgba(242,237,226,0.35); }
+  .btn-outline:hover{ border-color:var(--gold); color:var(--gold); }
+  .btn-block{ width:100%; }
+
+  /* ---------- SECTION SHELL ---------- */
+  .section{ padding:96px 20px; max-width:1240px; margin:0 auto; }
+  .section-head{ max-width:640px; }
+  .section h2{
+    font-family:var(--display);
+    font-size:clamp(2.4rem, 6.4vw, 4rem);
+    text-transform:uppercase;
+    line-height:0.98;
+    margin:14px 0 0;
+  }
+  .rule{ height:1px; background:var(--line); max-width:1240px; margin:0 auto; }
+
+  /* ---------- PROJECT SECTION ---------- */
+  .project-grid{
+    margin-top:44px;
+    display:grid;
+    grid-template-columns:1fr;
+    gap:40px;
+  }
+  @media(min-width:900px){
+    .project-grid{ grid-template-columns:0.85fr 1.15fr; align-items:start; }
+  }
+  .project-copy{ max-width:56ch; color:#d6cebf; font-size:1.02rem; }
+  .cover-placeholder{
+    aspect-ratio:1/1;
+    border:2px dashed var(--line);
+    background:var(--card);
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    text-align:center;
+    padding:24px;
+    gap:8px;
+  }
+  .cover-placeholder .ph-title{
+    font-family:var(--display);
+    font-size:1.2rem;
+    text-transform:uppercase;
+    color:var(--muted);
+  }
+  .cover-placeholder .ph-note{
+    font-family:var(--mono);
+    font-size:10px;
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+    color:#5c574c;
+    max-width:24ch;
+  }
+  .project-cover-art{
+    position:relative;
+  }
+  .project-cover-art img{
+    border:1px solid var(--line);
+    box-shadow:0 24px 60px rgba(0,0,0,0.55);
+  }
+  .tracklist{
+    margin-top:30px;
+    border-top:1px solid var(--line);
+  }
+  .track-row{
+    display:flex; align-items:center; gap:14px;
+    padding:12px 0;
+    border-bottom:1px solid var(--line);
+  }
+  .track-thumb{
+    width:34px; height:34px;
+    object-fit:cover;
+    border-radius:2px;
+    flex-shrink:0;
+  }
+  .track-num{
+    font-family:var(--mono);
+    font-size:12px;
+    color:var(--red);
+    min-width:24px;
+    flex-shrink:0;
+  }
+  .track-name{
+    font-family:var(--display);
+    font-size:1.02rem;
+    text-transform:uppercase;
+    letter-spacing:0.01em;
+    flex:1;
+  }
+  .track-row.tba .track-name{ color:var(--muted); font-family:var(--body); font-weight:600; text-transform:none; font-style:italic; }
+  .track-status{
+    font-family:var(--mono);
+    font-size:9px;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:var(--muted);
+    background:transparent;
+    border:1px solid var(--line);
+    padding:3px 8px;
+    flex-shrink:0;
+  }
+
+  /* ---------- COVER STORY (Atlanta Full) ---------- */
+  .afro-section{
+    background:
+      radial-gradient(ellipse at 75% 15%, rgba(221,18,35,0.10), transparent 55%),
+      radial-gradient(ellipse at 15% 85%, rgba(227,168,61,0.08), transparent 50%),
+      var(--bg);
+  }
+  .story-grid{
+    margin-top:44px;
+    display:grid;
+    grid-template-columns:1fr;
+    gap:40px;
+  }
+  @media(min-width:900px){
+    .story-grid{ grid-template-columns:1.1fr 0.9fr; align-items:center; }
+  }
+  .pull-quote{
+    font-family:var(--serif);
+    font-style:italic;
+    font-weight:500;
+    font-size:clamp(1.5rem, 3.4vw, 2.1rem);
+    line-height:1.28;
+    color:var(--gold);
+    border-left:3px solid var(--red);
+    padding-left:22px;
+  }
+  .story-body{
+    margin-top:26px;
+    font-size:1.05rem;
+    color:#d6cebf;
+    max-width:52ch;
+  }
+  .story-body::first-letter{
+    font-family:var(--display);
+    font-size:3.6rem;
+    float:left;
+    line-height:0.8;
+    padding:6px 8px 0 0;
+    color:var(--red);
+  }
+  .story-byline{
+    margin-top:20px;
+    font-family:var(--mono);
+    font-size:11px;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    color:var(--muted);
+  }
+  .story-cta{ margin-top:30px; }
+  .cover-insert{
+    position:relative;
+    transform:rotate(-2.5deg);
+  }
+  .cover-insert img{
+    border:6px solid var(--paper);
+    box-shadow:0 24px 60px rgba(0,0,0,0.55);
+  }
+  .cover-insert-stamp{
+    position:absolute; top:-14px; right:-10px;
+    background:var(--red);
+    color:var(--paper);
+    font-family:var(--mono);
+    font-size:11px;
+    font-weight:700;
+    letter-spacing:0.08em;
+    padding:8px 12px;
+    border-radius:50%;
+    width:64px; height:64px;
+    display:flex; align-items:center; justify-content:center;
+    text-align:center;
+    transform:rotate(10deg);
+    line-height:1.1;
+    text-transform:uppercase;
+    box-shadow:0 6px 16px rgba(0,0,0,0.4);
+  }
+
+  /* ---------- STREET REPORT (Faces of Atlanta) ---------- */
+  .street-section{ background:var(--card); border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
+  .street-grid{
+    margin-top:48px;
+    display:grid;
+    grid-template-columns:1fr;
+    gap:0;
+  }
+  @media(min-width:760px){ .street-grid{ grid-template-columns:repeat(2,1fr); } }
+  @media(min-width:1080px){ .street-grid{ grid-template-columns:repeat(3,1fr); } }
+  .frame{
+    border-bottom:1px solid var(--line);
+    border-right:1px solid var(--line);
+    padding:28px 26px 32px;
+  }
+  .street-grid .frame:nth-child(3n){ border-right:none; }
+  @media(max-width:1079px){ .street-grid .frame:nth-child(2n){ border-right:none; } }
+  @media(max-width:759px){ .street-grid .frame{ border-right:none !important; } }
+  .frame-photo{
+    position:relative;
+    aspect-ratio:4/5;
+    overflow:hidden;
+    border-radius:2px;
+    margin-bottom:16px;
+  }
+  .frame-photo img{
+    width:100%; height:100%; object-fit:cover; object-position:center 18%;
+    filter:contrast(1.12) brightness(0.95);
+    transition:transform 0.6s ease;
+  }
+  .frame:hover .frame-photo img{ transform:scale(1.04); }
+  .frame-num{
+    position:absolute; top:10px; left:10px;
+    font-family:var(--mono); font-size:11px; font-weight:600;
+    color:var(--bg); background:var(--gold);
+    padding:3px 8px; letter-spacing:0.05em;
+  }
+  .frame-cap{
+    font-family:var(--display);
+    font-size:1.15rem;
+    text-transform:uppercase;
+    line-height:1.05;
+  }
+  .frame-credit{
+    margin-top:8px;
+    font-family:var(--mono);
+    font-size:10px;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:var(--muted);
+  }
+
+  /* ---------- TIP LINE ---------- */
+  .tip-grid{
+    margin-top:44px;
+    display:grid;
+    grid-template-columns:1fr;
+    gap:36px;
+  }
+  @media(min-width:900px){
+    .tip-grid{ grid-template-columns:1.3fr 0.7fr; align-items:start; }
+  }
+  .tip-body{ max-width:56ch; margin-bottom:16px; }
+  .tip-body::first-letter{ font-size:inherit; float:none; padding:0; color:inherit; font-family:inherit; }
+  .tip-cta{ margin-top:22px; }
+  .tip-card{
+    border:1px solid var(--line);
+    background:var(--card);
+    padding:26px 26px 22px;
+  }
+  .tip-card-label{
+    font-family:var(--mono); font-size:10px; letter-spacing:0.12em;
+    text-transform:uppercase; color:var(--gold); margin-bottom:14px;
+  }
+  .tip-list{ list-style:none; }
+  .tip-list li{
+    font-family:var(--body); font-size:0.95rem; color:#d6cebf;
+    padding:10px 0; border-bottom:1px solid var(--line);
+  }
+  .tip-list li:last-child{ border-bottom:none; padding-bottom:0; }
+  .tip-list li::before{ content:"— "; color:var(--red); }
+
+  /* ---------- BRAVES LAND ---------- */
+  .next-section .kicker{ color:var(--gold); }
+  .coming-soon-badge{
+    display:inline-flex;
+    font-family:var(--mono);
+    font-size:10px;
+    font-weight:700;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    color:var(--bg);
+    background:var(--gold);
+    padding:5px 10px;
+    margin-bottom:16px;
+  }
+  .next-box{
+    margin-top:36px;
+    border:1px dashed var(--line);
+    padding:36px 28px;
+    max-width:640px;
+  }
+  .next-box h3{
+    font-family:var(--serif);
+    font-style:italic;
+    font-weight:600;
+    font-size:1.3rem;
+    color:var(--text);
+    margin-bottom:14px;
+  }
+  .next-box p{ color:#c9c1b3; max-width:48ch; }
+  .next-box .btn{ margin-top:22px; }
+
+  /* ---------- SUBSCRIBE (email) ---------- */
+  .sub-section{ background:var(--card); }
+  .sub-card{
+    margin-top:40px;
+    max-width:460px;
+    background:var(--paper);
+    color:#141210;
+    border-radius:2px;
+    padding:36px 30px 30px;
+    position:relative;
+  }
+  .sub-card::before{
+    content:"✂ CLIP HERE";
+    position:absolute; top:-13px; left:24px;
+    background:var(--bg);
+    color:var(--muted);
+    font-family:var(--mono);
+    font-size:9px;
+    letter-spacing:0.12em;
+    padding:2px 8px;
+  }
+  .sub-card{ border-top:2px dashed #141210; }
+  .sub-card h3{
+    font-family:var(--display);
+    font-size:1.5rem;
+    text-transform:uppercase;
+  }
+  .sub-card p{ margin-top:8px; color:#4a453c; font-size:0.95rem; }
+  .field-row{ margin-top:22px; margin-bottom:14px; }
+  .field-row label{
+    display:block; font-family:var(--mono); font-size:11px;
+    letter-spacing:0.08em; text-transform:uppercase; color:#4a453c;
+    margin-bottom:8px;
+  }
+  .field-row input[type="email"]{
+    width:100%;
+    background:#fff;
+    border:1px solid #cfc7b6;
+    color:#141210;
+    font-family:var(--body); font-size:16px;
+    padding:14px 14px; border-radius:2px;
+  }
+  .field-row input[type="email"]:focus{ border-color:var(--red); outline:none; }
+  .mc-note{ position:absolute; left:-5000px; }
+  #mce-responses{ margin-top:12px; font-family:var(--mono); font-size:12px; }
+  .sub-fineprint{ margin-top:16px; font-size:11px; color:#6d6658; font-family:var(--mono); letter-spacing:0.04em; }
+
+  /* ---------- FOOTER / INDICIA ---------- */
+  footer{
+    padding:40px 20px 56px;
+    border-top:1px solid var(--line);
+    max-width:1240px; margin:0 auto;
+    display:flex; flex-direction:column; gap:6px;
+  }
+  footer .foot-logo{
+    font-family:var(--display); font-size:1.2rem; text-transform:uppercase;
+  }
+  footer .foot-tagline{
+    font-family:var(--serif); font-style:italic; font-weight:500;
+    font-size:0.95rem; color:var(--gold); margin-top:2px;
+  }
+  footer .foot-indicia{
+    font-family:var(--mono); font-size:10px; letter-spacing:0.06em;
+    color:var(--muted); text-transform:uppercase;
+  }
+
+  @media(min-width:768px){
+    .section{ padding:130px 40px; }
+  }
+</style>
+</head>
+<body>
+
+  <header>
+    <div class="masthead">
+      <div class="masthead-logo">HIT JAMES<span class="dot">.</span></div>
+      <div class="masthead-meta">This Is What The City Sounds Like<br>Vol. 1</div>
+    </div>
+    <div class="masthead-rule"></div>
+    <nav class="primary-nav" aria-label="Primary">
+      <a href="#project">Project</a>
+      <a href="#atlanta-full">Atlanta Full</a>
+      <a href="#afromentum">Afromentum</a>
+      <a href="#braves-land">Braves Land</a>
+      <a href="#subscribe" class="nav-emphasis">Join ATL First</a>
+    </nav>
+    <div class="breaking-bar halftone" role="marquee" aria-label="Breaking headline ticker">
+      <div class="breaking-track">
+        <span class="hot">BREAKING</span>
+        <span>THIS IS WHAT THE CITY SOUNDS LIKE — VOL. 1</span>
+        <span>ATLANTA FULL OUT NOW</span>
+        <span>AFROMENTUM OUT NOW</span>
+        <span>I-75 NORTH — 47 MIN DELAY</span>
+        <span class="hot">BREAKING</span>
+        <span>THE CITY IS TALKING</span>
+        <span>NEXT UP: BRAVES LAND</span>
+        <span>I-285 TOP END — STANDSTILL</span>
+        <span class="hot">BREAKING</span>
+        <span>THIS IS WHAT THE CITY SOUNDS LIKE — VOL. 1</span>
+        <span>ATLANTA FULL OUT NOW</span>
+        <span>AFROMENTUM OUT NOW</span>
+        <span>I-75 NORTH — 47 MIN DELAY</span>
+        <span class="hot">BREAKING</span>
+        <span>THE CITY IS TALKING</span>
+        <span>NEXT UP: BRAVES LAND</span>
+        <span>I-285 TOP END — STANDSTILL</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- COVER / HERO -->
+  <section class="cover">
+    <div class="cover-bg"></div>
+    <div class="cover-overlay"></div>
+    <div class="cover-blurbs">
+      <span>Traffic.</span>
+      <span>Culture.</span>
+      <span>Survival.</span>
+      <span>Pride.</span>
+    </div>
+    <div class="cover-content">
+      <div class="kicker">Hit James Presents</div>
+      <h1>This Is What The City Sounds Like<span class="cover-vol">Vol. 1</span></h1>
+      <p class="cover-sub">Real Atlanta. Real conversations. One city caught on record.</p>
+      <p class="cover-support">Traffic. Pressure. Pride. Relationships. Survival. Humor. This is Atlanta as it sounds right now.</p>
+      <div class="cover-ctas">
+        <a href="https://hypeddit.com/820rwp" id="project-stream-link" target="_blank" rel="noopener" class="btn btn-primary">▶ Listen to the Project</a>
+        <a href="#subscribe" class="btn btn-outline">Join ATL First</a>
+      </div>
+      <p class="cover-discovery">First out: <a href="https://hypeddit.com/w54y5o" target="_blank" rel="noopener">Hear "Atlanta Full" →</a></p>
+      <div class="cover-issue-tag">
+        <div class="barcode" aria-hidden="true">
+          <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+        </div>
+        <span>Now Documenting · Atlanta, GA</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- THE PROJECT -->
+  <section class="section" id="project">
+    <div class="section-head">
+      <div class="kicker">The Project — 01</div>
+      <h2>The City Made The Tracklist</h2>
+    </div>
+    <div class="project-grid">
+      <div class="project-cover-art">
+        <img src="images/project-cover.jpg" alt="This Is What The City Sounds Like Vol. 1 — official cover art by Hit James" loading="lazy">
+      </div>
+      <div>
+        <p class="project-copy">"This Is What the City Sounds Like" captures the conversations happening in traffic, at gas stations, behind apartment gates, inside relationships and across neighborhoods throughout metro Atlanta. Every record reveals another side of the city.</p>
+        <div class="tracklist">
+          <div class="track-row">
+            <span class="track-num">01</span>
+            <img class="track-thumb" src="images/track-say-less.jpg" alt="" loading="lazy">
+            <span class="track-name">Say Less</span>
+          </div>
+          <div class="track-row">
+            <span class="track-num">02</span>
+            <span class="track-name">Still Move Regular</span>
+          </div>
+          <div class="track-row">
+            <span class="track-num">03</span>
+            <span class="track-name">Ain't Nun</span>
+          </div>
+          <div class="track-row">
+            <span class="track-num">04</span>
+            <span class="track-name">Big Rank</span>
+          </div>
+          <div class="track-row">
+            <span class="track-num">05</span>
+            <img class="track-thumb" src="images/track-bruh-got-going.jpg" alt="" loading="lazy">
+            <span class="track-name">What Bruh Got Going?</span>
+          </div>
+          <div class="track-row">
+            <span class="track-num">06</span>
+            <span class="track-name">Dashboard Digital</span>
+          </div>
+          <div class="track-row">
+            <span class="track-num">07</span>
+            <span class="track-name">Snapped On That</span>
+          </div>
+          <div class="track-row">
+            <span class="track-num">08</span>
+            <span class="track-name">Stand On It</span>
+          </div>
+          <div class="track-row">
+            <span class="track-num">09</span>
+            <img class="track-thumb" src="images/track-five-on-tank.jpg" alt="" loading="lazy">
+            <span class="track-name">Five on the Tank</span>
+          </div>
+          <div class="track-row">
+            <span class="track-num">10</span>
+            <img class="track-thumb" src="images/track-whats-the-code.jpg" alt="" loading="lazy">
+            <span class="track-name">What's the Code?</span>
+          </div>
+          <div class="track-row">
+            <span class="track-num">11</span>
+            <span class="track-name">Standing on Business</span>
+          </div>
+          <div class="track-row">
+            <span class="track-num">12</span>
+            <span class="track-name">Who All Over There?</span>
+          </div>
+        </div>
+        <div class="story-cta">
+          <a href="https://hypeddit.com/820rwp" target="_blank" rel="noopener" class="btn btn-primary">▶ Listen to the Project</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="rule"></div>
+
+  <!-- FEATURED RECORD: ATLANTA FULL -->
+  <section class="section" id="atlanta-full">
+    <div class="section-head">
+      <div class="kicker">Featured Record — 02</div>
+      <p class="lead-line">The Record That Started The Conversation</p>
+      <h2>Atlanta Full</h2>
+    </div>
+    <div class="story-grid">
+      <div>
+        <p class="pull-quote">"Atlanta changed. More people. More traffic. More apartments. More opinions."</p>
+        <p class="story-body">"Atlanta Full" said what thousands of drivers were already thinking while sitting on I-75.</p>
+        <div class="story-byline">Words &amp; Sound — Hit James</div>
+        <div class="story-cta">
+          <a href="https://hypeddit.com/w54y5o" target="_blank" rel="noopener" class="btn btn-primary">▶ Listen to "Atlanta Full"</a>
+        </div>
+      </div>
+      <div class="cover-insert">
+        <div class="cover-insert-stamp">Out<br>Now</div>
+        <img src="images/atlanta-full-cover.jpg" alt="Atlanta Full single cover art by Hit James" loading="lazy">
+      </div>
+    </div>
+  </section>
+
+  <div class="rule"></div>
+
+  <!-- LATEST DROP: AFROMENTUM -->
+  <section class="section afro-section" id="afromentum">
+    <div class="section-head">
+      <div class="kicker">Latest Drop — 03</div>
+      <p class="lead-line">A Different Side Of The Groove</p>
+      <h2>Afromentum</h2>
+    </div>
+    <div class="story-grid">
+      <div>
+        <p class="pull-quote">"Afro House. Jazz. One groove, no genre."</p>
+        <p class="story-body">Afromentum steps outside the city for a minute — live keys, saxophone, house rhythm, and space to breathe. Same ear behind Atlanta Full, different groove entirely.</p>
+        <div class="story-byline">Sound — Hit James · Afro House Jazz</div>
+        <div class="story-cta">
+          <a href="https://hypeddit.com/h3c8wo" target="_blank" rel="noopener" class="btn btn-primary">▶ Listen to "Afromentum"</a>
+        </div>
+      </div>
+      <div class="cover-insert">
+        <div class="cover-insert-stamp">Out<br>Now</div>
+        <img src="images/afromentum-cover.jpg" alt="Afromentum by Hit James — Afro House Jazz cover art" loading="lazy">
+      </div>
+    </div>
+  </section>
+
+  <div class="rule"></div>
+
+  <!-- STREET REPORT: FACES OF ATLANTA -->
+  <section class="section street-section" id="street-report">
+    <div class="section-head">
+      <div class="kicker">Street Report — 04</div>
+      <h2>Faces of Atlanta</h2>
+    </div>
+    <div class="street-grid">
+      <div class="frame">
+        <div class="frame-photo">
+          <span class="frame-num">01</span>
+          <img src="images/apd-officer-bw.jpg" alt="Atlanta Police Department officer sitting in her patrol car in traffic" loading="lazy">
+        </div>
+        <div class="frame-cap">APD said<br>Atlanta Full.</div>
+        <div class="frame-credit">Zone 5 — Downtown Connector</div>
+      </div>
+      <div class="frame">
+        <div class="frame-photo">
+          <span class="frame-num">02</span>
+          <img src="images/state-trooper-bw.jpg" alt="Georgia State Trooper sitting in his patrol vehicle in Atlanta traffic" loading="lazy">
+        </div>
+        <div class="frame-cap">Even the State<br>Trooper's stuck.</div>
+        <div class="frame-credit">GSP — I-75 North</div>
+      </div>
+      <div class="frame">
+        <div class="frame-photo">
+          <span class="frame-num">03</span>
+          <img src="images/marta-driver-bw.jpg" alt="MARTA bus operator behind the wheel with Atlanta skyline in view" loading="lazy">
+        </div>
+        <div class="frame-cap">MARTA said<br>Atlanta Full.</div>
+        <div class="frame-credit">Route 3 — Peachtree</div>
+      </div>
+      <div class="frame">
+        <div class="frame-photo">
+          <span class="frame-num">04</span>
+          <img src="images/firefighter-bw.jpg" alt="Atlanta firefighter in the cab of Engine 17 stuck in traffic" loading="lazy">
+        </div>
+        <div class="frame-cap">Firefighters<br>said Atlanta Full.</div>
+        <div class="frame-credit">Engine 17 — Station House</div>
+      </div>
+      <div class="frame">
+        <div class="frame-photo">
+          <span class="frame-num">05</span>
+          <img src="images/traffic-baddie-bw.jpg" alt="Atlanta local reacting to gridlock traffic on I-75" loading="lazy">
+        </div>
+        <div class="frame-cap">The city felt<br>this one.</div>
+        <div class="frame-credit">I-75 North — Exit 249C</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="rule"></div>
+
+  <!-- TIP LINE: POTHOLE / STREET HOTLINE -->
+  <section class="section tip-section" id="tip-line">
+    <div class="section-head">
+      <div class="kicker">Tip Line — 05</div>
+      <h2>See Something Broken?</h2>
+    </div>
+    <div class="tip-grid">
+      <div>
+        <p class="story-body tip-body">Cracked street. Dead light. Pothole that's been eating tires since spring. If it's been bothering you on the way to work, it's probably bothering the whole block too.</p>
+        <p class="story-body tip-body">File it once at ATL311 — the city's real reporting system — and it goes straight to the department responsible for fixing it.</p>
+        <div class="tip-cta">
+          <a href="https://www.atl311.com/" target="_blank" rel="noopener" class="btn btn-primary">Report It to ATL311 →</a>
+        </div>
+        <div class="story-byline">Or dial 311 from any Atlanta phone</div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-card-label">Field Notes</div>
+        <ul class="tip-list">
+          <li>Potholes &amp; roadway hazards</li>
+          <li>Broken streetlights</li>
+          <li>Missed trash pickup</li>
+          <li>Sidewalk damage</li>
+          <li>Downed signs &amp; signals</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <div class="rule"></div>
+
+  <!-- BRAVES LAND -->
+  <section class="section next-section" id="braves-land">
+    <div class="section-head">
+      <div class="kicker">Braves Land — 06</div>
+      <p class="lead-line">From The City To Braves Country</p>
+      <h2>Braves Land</h2>
+    </div>
+    <div class="next-box">
+      <div class="coming-soon-badge">Coming Soon</div>
+      <h3>A hometown record built for the fans, the tailgates, The Battery and every victory celebrated across Braves Country.</h3>
+      <a href="#subscribe" class="btn btn-outline">Get It First</a>
+    </div>
+  </section>
+
+  <!-- SUBSCRIBE -->
+  <section class="section sub-section" id="subscribe">
+    <div class="section-head">
+      <div class="kicker">Subscribe — 07</div>
+      <h2>Join ATL First</h2>
+    </div>
+
+    <div class="sub-card">
+      <h3>New records. First listen.</h3>
+      <p>Get new records, visuals and Atlanta stories before everybody else.</p>
+
+      <form action="https://gmail.us20.list-manage.com/subscribe/post?u=c20b8bf747ae0151fe8b77576&amp;id=dc3ade8c53&amp;f_id=00bd2deef0" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" target="_blank" novalidate>
+        <div class="field-row">
+          <label for="mce-EMAIL">Email address</label>
+          <input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL" placeholder="your@email.com" required>
+        </div>
+        <div class="mc-note" aria-hidden="true">
+          <input type="text" name="b_c20b8bf747ae0151fe8b77576_dc3ade8c53" tabindex="-1" value="">
+        </div>
+        <button type="submit" name="subscribe" id="mc-embedded-subscribe" class="btn btn-primary btn-block">Join ATL First</button>
+        <div id="mce-responses">
+          <div class="response" id="mce-error-response" style="display:none; color:var(--red);"></div>
+          <div class="response" id="mce-success-response" style="display:none; color:#1b6b3a;"></div>
+        </div>
+      </form>
+      <p class="sub-fineprint">Vol. 1 — Atlanta, GA</p>
+    </div>
+  </section>
+
+  <footer>
+    <div class="foot-logo">Hit James</div>
+    <div class="foot-tagline">This Is What The City Sounds Like</div>
+    <div class="foot-indicia">Built from Atlanta. Heard everywhere. · © 2026</div>
+  </footer>
+
+</body>
+</html>
