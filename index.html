@@ -28,6 +28,21 @@
     --serif:'Fraunces', serif;
     --body:'IBM Plex Sans', sans-serif;
     --mono:'IBM Plex Mono', monospace;
+    --outline-border: rgba(242,237,228,0.35);
+    --halftone-dot: rgba(242,237,226,0.06);
+    color-scheme: dark;
+  }
+  :root[data-theme="light"]{
+    --bg:#ffffff;
+    --card:#f6f4ef;
+    --line:#e3ddd0;
+    --text:#161412;
+    --muted:#79715f;
+    --red:#c4101f;
+    --gold:#a3700a;
+    --outline-border: rgba(20,18,16,0.22);
+    --halftone-dot: rgba(20,18,16,0.06);
+    color-scheme: light;
   }
   *{ box-sizing:border-box; margin:0; padding:0; }
   html{ scroll-behavior:smooth; }
@@ -38,6 +53,7 @@
     line-height:1.55;
     -webkit-font-smoothing:antialiased;
     overflow-x:hidden;
+    transition:background-color 0.2s ease, color 0.2s ease;
   }
   img{ max-width:100%; display:block; }
   a{ color:inherit; text-decoration:none; }
@@ -51,7 +67,7 @@
 
   /* subtle halftone texture on dark sections */
   .halftone{
-    background-image: radial-gradient(rgba(242,237,226,0.05) 1px, transparent 1px);
+    background-image: radial-gradient(var(--halftone-dot) 1px, transparent 1px);
     background-size:6px 6px;
   }
 
@@ -101,6 +117,55 @@
   .primary-nav a{ color:var(--muted); transition:color 0.15s ease; }
   .primary-nav a:hover{ color:var(--gold); }
   .primary-nav a.nav-emphasis{ color:var(--gold); }
+
+  /* ---------- THEME TOGGLE ---------- */
+  .theme-toggle{
+    display:inline-flex; align-items:center; justify-content:center;
+    width:34px; height:34px;
+    border:1px solid var(--line);
+    border-radius:50%;
+    background:transparent;
+    color:var(--text);
+    cursor:pointer;
+    font-size:15px;
+    line-height:1;
+    flex-shrink:0;
+    transition:border-color 0.15s ease, color 0.15s ease;
+  }
+  .theme-toggle:hover{ border-color:var(--gold); color:var(--gold); }
+  .theme-toggle .icon-dark{ display:inline; }
+  .theme-toggle .icon-light{ display:none; }
+  :root[data-theme="light"] .theme-toggle .icon-dark{ display:none; }
+  :root[data-theme="light"] .theme-toggle .icon-light{ display:inline; }
+
+  /* ---------- BREAKING BAR ---------- */
+  .breaking-bar{
+    background:var(--bg);
+    border-bottom:1px solid var(--line);
+    overflow:hidden;
+    white-space:nowrap;
+  }
+  .breaking-track{
+    display:inline-flex;
+    animation:ticker-scroll 38s linear infinite;
+    will-change:transform;
+  }
+  .breaking-track span{
+    font-family:var(--mono);
+    font-size:11px;
+    font-weight:600;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    padding:9px 26px;
+    white-space:nowrap;
+    border-right:1px solid var(--line);
+    color:var(--muted);
+  }
+  .breaking-track span.hot{ color:var(--red); }
+  @keyframes ticker-scroll{ from{transform:translateX(0);} to{transform:translateX(-50%);} }
+  @media (prefers-reduced-motion: reduce){
+    .breaking-track{ animation:none; overflow-x:auto; }
+  }
 
   /* ---------- HERO / COVER ---------- */
   .cover{
@@ -192,7 +257,7 @@
   .btn:active{ transform:scale(0.97); }
   .btn-primary{ background:var(--red); color:var(--paper); }
   .btn-primary:hover{ background:#ff2d3c; }
-  .btn-outline{ background:transparent; color:var(--text); border-color:rgba(242,237,226,0.35); }
+  .btn-outline{ background:transparent; color:var(--text); border-color:var(--outline-border); }
   .btn-outline:hover{ border-color:var(--gold); color:var(--gold); }
   .btn-block{ width:100%; }
 
@@ -597,7 +662,13 @@
         <img src="hitjames-mark.png" alt="Hit James" class="masthead-mark">
         <span class="masthead-logo">HIT JAMES<span class="dot">.</span></span>
       </a>
-      <div class="masthead-meta">This Is What The City Sounds Like<br>Vol. 2</div>
+      <div style="display:flex; align-items:center; gap:16px;">
+        <div class="masthead-meta">This Is What The City Sounds Like<br>Vol. 2</div>
+        <button type="button" class="theme-toggle" id="theme-toggle" aria-label="Switch to light theme" title="Switch theme">
+          <span class="icon-dark" aria-hidden="true">&#9728;</span>
+          <span class="icon-light" aria-hidden="true">&#9790;</span>
+        </button>
+      </div>
     </div>
     <div class="masthead-rule"></div>
     <nav class="primary-nav" aria-label="Primary">
@@ -608,6 +679,26 @@
       <a href="#braves-land">Braves Land</a>
       <a href="#subscribe" class="nav-emphasis">Join ATL First</a>
     </nav>
+    <div class="breaking-bar halftone" role="marquee" aria-label="Breaking Atlanta headlines">
+      <div class="breaking-track" id="breaking-track">
+        <span class="hot">BREAKING</span>
+        <span>THIS IS WHAT THE CITY SOUNDS LIKE — VOL. 2 OUT NOW</span>
+        <span>VOL. 1 STILL STREAMING</span>
+        <span>ATLANTA FULL OUT NOW</span>
+        <span>AFROMENTUM OUT NOW</span>
+        <span>ATL POPULATION: 529,110 · U.S. CENSUS BUREAU EST., JUL. 2025</span>
+        <span class="hot">BREAKING</span>
+        <span>NEXT UP: BRAVES LAND</span>
+        <span class="hot">BREAKING</span>
+        <span>THIS IS WHAT THE CITY SOUNDS LIKE — VOL. 2 OUT NOW</span>
+        <span>VOL. 1 STILL STREAMING</span>
+        <span>ATLANTA FULL OUT NOW</span>
+        <span>AFROMENTUM OUT NOW</span>
+        <span>ATL POPULATION: 529,110 · U.S. CENSUS BUREAU EST., JUL. 2025</span>
+        <span class="hot">BREAKING</span>
+        <span>NEXT UP: BRAVES LAND</span>
+      </div>
+    </div>
   </header>
 
   <!-- COVER / HERO -->
@@ -839,6 +930,103 @@
     <div class="foot-tagline">This Is What The City Sounds Like</div>
     <div class="foot-indicia">Built from Atlanta. Heard everywhere. · © 2026</div>
   </footer>
+
+  <script>
+  (function(){
+    // ---------- THEME TOGGLE (dark default, light optional, remembered per-visitor) ----------
+    var root = document.documentElement;
+    var toggleBtn = document.getElementById('theme-toggle');
+
+    function getSavedTheme(){
+      try { return localStorage.getItem('hj-theme'); } catch(e){ return null; }
+    }
+    function saveTheme(v){
+      try { localStorage.setItem('hj-theme', v); } catch(e){ /* storage unavailable, ignore */ }
+    }
+    function applyTheme(theme){
+      if(theme === 'light'){
+        root.setAttribute('data-theme', 'light');
+        if(toggleBtn) toggleBtn.setAttribute('aria-label', 'Switch to dark theme');
+      } else {
+        root.removeAttribute('data-theme');
+        if(toggleBtn) toggleBtn.setAttribute('aria-label', 'Switch to light theme');
+      }
+    }
+
+    var saved = getSavedTheme();
+    if(saved === 'light' || saved === 'dark'){ applyTheme(saved); }
+
+    if(toggleBtn){
+      toggleBtn.addEventListener('click', function(){
+        var isLight = root.getAttribute('data-theme') === 'light';
+        var next = isLight ? 'dark' : 'light';
+        applyTheme(next);
+        saveTheme(next);
+      });
+    }
+  })();
+  </script>
+
+  <script>
+  (function(){
+    // ---------- BREAKING TICKER: static promo items + live Fox 5 Atlanta headlines ----------
+    // Headlines are pulled client-side from Fox 5 Atlanta's public Google News index via a
+    // free RSS-to-JSON proxy (rss2json.com). This is not an official Fox 5 feed or widget —
+    // there isn't a public one — so if either free service is unreachable or rate-limited,
+    // the ticker quietly keeps running on the static items below instead of breaking.
+    var track = document.getElementById('breaking-track');
+    if(!track) return;
+
+    var baseItems = [
+      { text: 'BREAKING', hot: true },
+      { text: 'THIS IS WHAT THE CITY SOUNDS LIKE — VOL. 2 OUT NOW' },
+      { text: 'VOL. 1 STILL STREAMING' },
+      { text: 'ATLANTA FULL OUT NOW' },
+      { text: 'AFROMENTUM OUT NOW' },
+      { text: 'ATL POPULATION: 529,110 · U.S. CENSUS BUREAU EST., JUL. 2025' },
+      { text: 'BREAKING', hot: true },
+      { text: 'NEXT UP: BRAVES LAND' }
+    ];
+
+    function renderTicker(items){
+      var frag = document.createDocumentFragment();
+      // render the sequence twice back-to-back so the CSS animation can loop seamlessly
+      for(var pass = 0; pass < 2; pass++){
+        items.forEach(function(it){
+          var span = document.createElement('span');
+          if(it.hot) span.className = 'hot';
+          span.textContent = it.text;
+          frag.appendChild(span);
+        });
+      }
+      track.innerHTML = '';
+      track.appendChild(frag);
+    }
+
+    renderTicker(baseItems);
+
+    try {
+      var googleNewsFeed = 'https://news.google.com/rss/search?q=site:fox5atlanta.com+when:2d&hl=en-US&gl=US&ceid=US:en';
+      var proxyUrl = 'https://api.rss2json.com/v1/api.json?rss_url=' + encodeURIComponent(googleNewsFeed);
+
+      fetch(proxyUrl, { cache: 'no-store' })
+        .then(function(res){
+          if(!res.ok) throw new Error('feed unavailable');
+          return res.json();
+        })
+        .then(function(data){
+          if(!data || data.status !== 'ok' || !Array.isArray(data.items) || !data.items.length) return;
+          var headlines = data.items.slice(0, 5).map(function(it){
+            var title = (it.title || '').replace(/\s*-\s*FOX\s*5\s*Atlanta\s*$/i, '').trim();
+            return { text: 'FOX 5 ATL: ' + title.toUpperCase() };
+          });
+          var merged = baseItems.slice(0, 2).concat(headlines, baseItems.slice(2));
+          renderTicker(merged);
+        })
+        .catch(function(){ /* static ticker already rendered, nothing more to do */ });
+    } catch(e) { /* static ticker already rendered, nothing more to do */ }
+  })();
+  </script>
 
 </body>
 </html>
