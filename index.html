@@ -241,6 +241,79 @@
   }
   .rule{ height:1px; background:var(--line); max-width:1240px; margin:0 auto; }
 
+  /* ---------- FEATURED SONG ---------- */
+  .featured-section{
+    background:
+      radial-gradient(ellipse at 20% 10%, rgba(196,16,31,0.08), transparent 55%),
+      var(--card);
+    border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+  }
+  .featured-label{
+    display:inline-flex; align-items:center; gap:8px;
+    font-family:var(--mono); font-size:11px; font-weight:700;
+    letter-spacing:0.16em; text-transform:uppercase; color:var(--bg);
+    background:var(--red);
+    padding:6px 12px;
+    margin-bottom:18px;
+  }
+  .featured-grid{
+    margin-top:18px;
+    display:grid;
+    grid-template-columns:1fr;
+    gap:32px;
+    align-items:center;
+  }
+  @media(min-width:900px){
+    .featured-grid{ grid-template-columns:0.8fr 1.2fr; }
+  }
+  .featured-art{ position:relative; }
+  .featured-art img{
+    border:1px solid var(--line);
+    box-shadow:0 24px 60px rgba(0,0,0,0.5);
+    aspect-ratio:1/1;
+    object-fit:cover;
+    width:100%;
+  }
+  .featured-title{
+    font-family:var(--display);
+    font-size:clamp(1.8rem, 4.6vw, 2.8rem);
+    text-transform:uppercase;
+    line-height:1.0;
+  }
+  .featured-artist{
+    margin-top:8px;
+    font-family:var(--mono);
+    font-size:12px;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    color:var(--muted);
+  }
+  .featured-tagline{
+    margin-top:14px;
+    font-family:var(--serif);
+    font-style:italic;
+    font-weight:500;
+    font-size:1.15rem;
+    color:var(--gold);
+    max-width:46ch;
+  }
+  .featured-ctas{
+    margin-top:26px;
+    display:flex; flex-wrap:wrap; gap:14px; align-items:center;
+  }
+  .featured-back{
+    margin-top:16px;
+    font-family:var(--mono);
+    font-size:11px;
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+    color:var(--muted);
+  }
+  .featured-back a{ color:var(--gold); border-bottom:1px solid rgba(227,168,61,0.4); }
+  .featured-back a:hover{ color:#f3c264; }
+  .featured-skeleton{ opacity:0.45; }
+
   /* ---------- PROJECT SECTION ---------- */
   .project-grid{
     margin-top:44px;
@@ -679,10 +752,29 @@
     </div>
   </section>
 
+  <!-- FEATURED SONG (rotates — driven by featured.json + songs.json) -->
+  <section class="section featured-section" id="featured-song">
+    <div class="featured-label">★ Featured Song</div>
+    <div class="featured-grid" id="featured-content">
+      <div class="featured-art">
+        <img id="featured-cover" src="vol2-cover.jpg" alt="Featured song cover art" loading="lazy">
+      </div>
+      <div>
+        <div class="featured-title" id="featured-title">Loading…</div>
+        <div class="featured-artist" id="featured-artist">Hit James</div>
+        <p class="featured-tagline" id="featured-tagline"></p>
+        <div class="featured-ctas" id="featured-ctas"></div>
+        <p class="featured-back">From <em>This Is What The City Sounds Like — Vol. II</em> · <a href="#project">Hear the full album ↓</a></p>
+      </div>
+    </div>
+  </section>
+
+  <div class="rule"></div>
+
   <!-- THE PROJECT: VOL. 2 (HEADLINER) -->
   <section class="section" id="project">
     <div class="section-head">
-      <div class="kicker">The Project — 01</div>
+      <div class="kicker">The Project — 02</div>
       <p class="lead-line">Vol. 2 — Out Now</p>
       <h2>The City Made The Tracklist</h2>
     </div>
@@ -708,7 +800,7 @@
   <!-- THE PROJECT: VOL. 1 (ARCHIVE) -->
   <section class="section" id="vol-1">
     <div class="section-head">
-      <div class="kicker">The Archive — 02</div>
+      <div class="kicker">The Archive — 03</div>
       <p class="lead-line">Where It Started</p>
       <h2>Vol. 1</h2>
     </div>
@@ -788,7 +880,7 @@
   <!-- FEATURED RECORD: ATLANTA FULL -->
   <section class="section" id="atlanta-full">
     <div class="section-head">
-      <div class="kicker">Featured Record — 03</div>
+      <div class="kicker">Featured Record — 04</div>
       <p class="lead-line">The Record That Started The Conversation</p>
       <h2>Atlanta Full</h2>
     </div>
@@ -817,7 +909,7 @@
   <!-- LATEST DROP: AFROMENTUM -->
   <section class="section afro-section" id="afromentum">
     <div class="section-head">
-      <div class="kicker">Latest Drop — 04</div>
+      <div class="kicker">Latest Drop — 05</div>
       <p class="lead-line">A Different Side Of The Groove</p>
       <h2>Afromentum</h2>
     </div>
@@ -846,7 +938,7 @@
   <!-- BRAVES LAND -->
   <section class="section next-section" id="braves-land">
     <div class="section-head">
-      <div class="kicker">Braves Land — 05</div>
+      <div class="kicker">Braves Land — 06</div>
       <p class="lead-line">From The City To Braves Country</p>
       <h2>Braves Land</h2>
     </div>
@@ -860,7 +952,7 @@
   <!-- SUBSCRIBE -->
   <section class="section sub-section" id="subscribe">
     <div class="section-head">
-      <div class="kicker">Subscribe — 06</div>
+      <div class="kicker">Subscribe — 07</div>
       <h2>Join ATL First</h2>
     </div>
 
@@ -951,6 +1043,91 @@
         })
         .catch(function(){ /* static ticker already rendered, nothing more to do */ });
     } catch(e) { /* static ticker already rendered, nothing more to do */ }
+  })();
+  </script>
+
+  <script>
+  (function(){
+    // ---------- FEATURED SONG: reads songs.json (catalog) + featured.json (which song id is live) ----------
+    // Both files are fetched fresh on every page load (cache: 'no-store' + a cache-busting
+    // query string) so a change made in the admin page shows up for every visitor — including
+    // people who already have the site loaded or cached — without anyone needing to clear
+    // their browser cache or wait for a redeploy. This is plain, no-account, no-backend data:
+    // changing featured.json's "id" value is the entire update.
+    var elTitle = document.getElementById('featured-title');
+    var elArtist = document.getElementById('featured-artist');
+    var elTagline = document.getElementById('featured-tagline');
+    var elCover = document.getElementById('featured-cover');
+    var elCtas = document.getElementById('featured-ctas');
+    if(!elTitle) return;
+
+    function bust(url){
+      return url + (url.indexOf('?') === -1 ? '?' : '&') + 'v=' + Date.now();
+    }
+
+    function buildCtas(song, catalog){
+      elCtas.innerHTML = '';
+      var primaryUrl, primaryLabel;
+      if(song.spotifyTrackId){
+        primaryUrl = 'https://open.spotify.com/track/' + song.spotifyTrackId;
+        primaryLabel = '▶ Play on Spotify';
+      } else {
+        // No individual Spotify track link on file yet for this song — fall back to a real,
+        // working Spotify search for the exact title rather than a fake/nonfunctional button.
+        primaryUrl = 'https://open.spotify.com/search/' + encodeURIComponent('Hit James ' + song.title);
+        primaryLabel = '▶ Find It On Spotify';
+      }
+      var a1 = document.createElement('a');
+      a1.href = primaryUrl; a1.target = '_blank'; a1.rel = 'noopener';
+      a1.className = 'btn btn-primary';
+      a1.textContent = primaryLabel;
+      elCtas.appendChild(a1);
+
+      if(song.appleMusicUrl){
+        var a2 = document.createElement('a');
+        a2.href = song.appleMusicUrl; a2.target = '_blank'; a2.rel = 'noopener';
+        a2.className = 'btn btn-outline';
+        a2.textContent = 'Apple Music';
+        elCtas.appendChild(a2);
+      }
+
+      var a3 = document.createElement('a');
+      a3.href = song.page || catalog.albumAnchor;
+      a3.className = 'btn btn-outline';
+      a3.textContent = 'Song Page';
+      elCtas.appendChild(a3);
+    }
+
+    function render(song, catalog){
+      elTitle.textContent = song.title;
+      elArtist.textContent = catalog.artist || 'Hit James';
+      elTagline.textContent = song.tagline || '';
+      elCover.src = song.cover || catalog.albumCover;
+      elCover.alt = song.title + ' — Hit James';
+      buildCtas(song, catalog);
+    }
+
+    Promise.all([
+      fetch(bust('songs.json'), { cache: 'no-store' }).then(function(r){ return r.json(); }),
+      fetch(bust('featured.json'), { cache: 'no-store' }).then(function(r){ return r.json(); })
+    ]).then(function(results){
+      var catalog = results[0];
+      var featured = results[1];
+      var song = null;
+      for(var i = 0; i < catalog.songs.length; i++){
+        if(catalog.songs[i].id === featured.id){ song = catalog.songs[i]; break; }
+      }
+      if(!song) song = catalog.songs[0];
+      render(song, catalog);
+    }).catch(function(){
+      // If the data files can't be reached for any reason, don't leave a broken "Loading…"
+      // state — quietly fall back to the initial featured song so the section still works.
+      elTitle.textContent = 'Nobody Came';
+      elArtist.textContent = 'Hit James';
+      elTagline.textContent = "The quiet after everybody said they'd show up.";
+      elCover.src = 'vol2-cover.jpg';
+      buildCtas({ title:'Nobody Came', page:'song-nobody-came.html', spotifyTrackId:'7oWlHvLB4TnbJLxXkGmQbk' }, { albumAnchor:'#project' });
+    });
   })();
   </script>
 

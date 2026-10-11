@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Featured Song Admin | Hit James</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=IBM+Plex+Mono:wght@500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --bg:#ffffff; --card:#f6f4ef; --line:#e3ddd0; --text:#161412;
+    --muted:#79715f; --red:#c4101f; --gold:#a3700a; --green:#1b6b3a;
+    --display:'Archivo Black', sans-serif; --body:'IBM Plex Sans', sans-serif; --mono:'IBM Plex Mono', monospace;
+  }
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  body{ background:var(--bg); color:var(--text); font-family:var(--body); line-height:1.5; }
+  .wrap{ max-width:560px; margin:0 auto; padding:40px 20px 80px; }
+  h1{ font-family:var(--display); font-size:1.6rem; text-transform:uppercase; }
+  .sub{ margin-top:6px; font-family:var(--mono); font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:var(--muted); }
+  .card{ margin-top:28px; border:1px solid var(--line); background:var(--card); padding:22px 22px 24px; border-radius:4px; }
+  .card h2{ font-family:var(--display); font-size:1rem; text-transform:uppercase; margin-bottom:14px; }
+  label{ display:block; font-family:var(--mono); font-size:11px; letter-spacing:0.06em; text-transform:uppercase; color:var(--muted); margin-bottom:6px; margin-top:14px; }
+  label:first-child{ margin-top:0; }
+  input[type="password"], input[type="text"], select{
+    width:100%; background:#fff; border:1px solid #cfc7b6; color:var(--text);
+    font-family:var(--body); font-size:16px; padding:12px 12px; border-radius:2px;
+  }
+  button{
+    margin-top:18px; width:100%; display:inline-flex; align-items:center; justify-content:center;
+    font-family:var(--body); font-weight:700; font-size:15px; padding:14px 20px;
+    border-radius:2px; border:2px solid transparent; cursor:pointer; min-height:48px;
+    background:var(--red); color:#fff;
+  }
+  button.secondary{ background:transparent; color:var(--text); border-color:#cfc7b6; }
+  button:disabled{ opacity:0.5; cursor:not-allowed; }
+  .msg{ margin-top:14px; font-family:var(--mono); font-size:12px; }
+  .msg.ok{ color:var(--green); }
+  .msg.err{ color:var(--red); }
+  .note{ margin-top:10px; font-size:12px; color:var(--muted); }
+  .hidden{ display:none !important; }
+  .current{ font-family:var(--mono); font-size:12px; color:var(--muted); margin-top:4px; }
+  .current b{ color:var(--text); }
+  a{ color:var(--gold); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Featured Song — Admin</h1>
+  <div class="sub">Bravesland.com · Private · Not linked from the site</div>
+
+  <!-- STEP 1: PASSWORD GATE -->
+  <div class="card" id="gate-card">
+    <h2>Enter Password</h2>
+    <label for="pw">Admin password</label>
+    <input type="password" id="pw" autocomplete="current-password">
+    <button id="unlock-btn">Unlock</button>
+    <p class="msg err hidden" id="gate-msg"></p>
+    <p class="note">This password is a light front-door deterrent only — it lives in this page's code and isn't bank-grade security. The real protection is the GitHub access token below: without a valid token scoped to this repo, nothing can actually be changed. Keep this page's link private, and don't share your token with anyone.</p>
+  </div>
+
+  <!-- STEP 2: ONE-TIME GITHUB CONNECTION -->
+  <div class="card hidden" id="connect-card">
+    <h2>Connect To GitHub (one time)</h2>
+    <label for="gh-owner">GitHub username (repo owner)</label>
+    <input type="text" id="gh-owner" placeholder="e.g. hitjames">
+    <label for="gh-repo">Repository name</label>
+    <input type="text" id="gh-repo" placeholder="e.g. bravesland">
+    <label for="gh-branch">Branch</label>
+    <input type="text" id="gh-branch" value="main">
+    <label for="gh-token">Personal access token</label>
+    <input type="password" id="gh-token" autocomplete="off" placeholder="github_pat_...">
+    <button id="save-connection-btn">Save Connection</button>
+    <p class="msg hidden" id="connect-msg"></p>
+    <p class="note">
+      One-time setup. In GitHub: <b>Settings → Developer settings → Personal access tokens → Fine-grained tokens → Generate new token</b>. Set <b>Repository access</b> to only this repo, and under <b>Permissions → Contents</b> choose <b>Read and write</b>. Give it an expiration date. Paste the token above — it's saved only in this browser (never sent anywhere except GitHub), so you'll only need to do this once per device.
+    </p>
+  </div>
+
+  <!-- STEP 3: SET FEATURED SONG -->
+  <div class="card hidden" id="feature-card">
+    <h2>Set Featured Song</h2>
+    <p class="current">Currently live: <b id="currently-live">loading…</b></p>
+    <label for="song-select">Choose a song from Vol. II</label>
+    <select id="song-select"></select>
+    <button id="set-featured-btn">Set As Featured</button>
+    <button class="secondary" id="reset-connection-btn" type="button">Change GitHub Connection</button>
+    <p class="msg hidden" id="feature-msg"></p>
+  </div>
+
+  <p class="note" style="margin-top:28px;">Once you click "Set As Featured," the homepage updates for every visitor within about a minute — no code edits, no re-uploading files, no redeploy.</p>
+</div>
+
+<script>
+(function(){
+  // ---------------------------------------------------------------------
+  // This admin page writes directly to featured.json in the GitHub repo
+  // using the GitHub Contents API, from the browser, using a token only
+  // you hold. There is no server here — GitHub *is* the backend, which
+  // is the simplest option that needs no new paid service and uses
+  // hosting you already have.
+  // ---------------------------------------------------------------------
+
+  var PASSWORD_HASH = "a6d51b50bae8d11c174ffa6b5267d7ba0a6fd8a54008c7e9ae156aa99ae16e5b"; // sha-256 of the current password
+
+  var gateCard = document.getElementById('gate-card');
+  var connectCard = document.getElementById('connect-card');
+  var featureCard = document.getElementById('feature-card');
+
+  async function sha256(text){
+    var enc = new TextEncoder().encode(text);
+    var buf = await crypto.subtle.digest('SHA-256', enc);
+    return Array.from(new Uint8Array(buf)).map(function(b){ return b.toString(16).padStart(2,'0'); }).join('');
+  }
+
+  document.getElementById('unlock-btn').addEventListener('click', async function(){
+    var pw = document.getElementById('pw').value;
+    var hash = await sha256(pw);
+    var msg = document.getElementById('gate-msg');
+    if(hash === PASSWORD_HASH){
+      gateCard.classList.add('hidden');
+      msg.classList.add('hidden');
+      afterUnlock();
+    } else {
+      msg.textContent = 'Wrong password.';
+      msg.classList.remove('hidden');
+    }
+  });
+
+  function getConnection(){
+    try {
+      return {
+        owner: localStorage.getItem('bl_gh_owner') || '',
+        repo: localStorage.getItem('bl_gh_repo') || '',
+        branch: localStorage.getItem('bl_gh_branch') || 'main',
+        token: localStorage.getItem('bl_gh_token') || ''
+      };
+    } catch(e){ return { owner:'', repo:'', branch:'main', token:'' }; }
+  }
+
+  function saveConnection(conn){
+    try {
+      localStorage.setItem('bl_gh_owner', conn.owner);
+      localStorage.setItem('bl_gh_repo', conn.repo);
+      localStorage.setItem('bl_gh_branch', conn.branch);
+      localStorage.setItem('bl_gh_token', conn.token);
+    } catch(e){ /* localStorage unavailable — connection will need re-entry each visit */ }
+  }
+
+  function afterUnlock(){
+    var conn = getConnection();
+    if(conn.owner && conn.repo && conn.token){
+      connectCard.classList.add('hidden');
+      showFeatureCard();
+    } else {
+      document.getElementById('gh-owner').value = conn.owner;
+      document.getElementById('gh-repo').value = conn.repo;
+      document.getElementById('gh-branch').value = conn.branch || 'main';
+      connectCard.classList.remove('hidden');
+    }
+  }
+
+  document.getElementById('save-connection-btn').addEventListener('click', function(){
+    var conn = {
+      owner: document.getElementById('gh-owner').value.trim(),
+      repo: document.getElementById('gh-repo').value.trim(),
+      branch: document.getElementById('gh-branch').value.trim() || 'main',
+      token: document.getElementById('gh-token').value.trim()
+    };
+    var msg = document.getElementById('connect-msg');
+    if(!conn.owner || !conn.repo || !conn.token){
+      msg.textContent = 'Fill in owner, repo, and token.';
+      msg.className = 'msg err';
+      return;
+    }
+    saveConnection(conn);
+    msg.textContent = 'Saved.';
+    msg.className = 'msg ok';
+    connectCard.classList.add('hidden');
+    showFeatureCard();
+  });
+
+  document.getElementById('reset-connection-btn').addEventListener('click', function(){
+    featureCard.classList.add('hidden');
+    var conn = getConnection();
+    document.getElementById('gh-owner').value = conn.owner;
+    document.getElementById('gh-repo').value = conn.repo;
+    document.getElementById('gh-branch').value = conn.branch || 'main';
+    document.getElementById('gh-token').value = '';
+    connectCard.classList.remove('hidden');
+  });
+
+  var catalog = null;
+
+  async function showFeatureCard(){
+    featureCard.classList.remove('hidden');
+    var select = document.getElementById('song-select');
+    var liveEl = document.getElementById('currently-live');
+    var msg = document.getElementById('feature-msg');
+    msg.classList.add('hidden');
+
+    try {
+      if(!catalog){
+        var songsRes = await fetch('songs.json?v=' + Date.now(), { cache: 'no-store' });
+        catalog = await songsRes.json();
+        select.innerHTML = '';
+        catalog.songs.forEach(function(s){
+          var opt = document.createElement('option');
+          opt.value = s.id;
+          opt.textContent = s.track + '. ' + s.title;
+          select.appendChild(opt);
+        });
+      }
+      var featRes = await fetch('featured.json?v=' + Date.now(), { cache: 'no-store' });
+      var feat = await featRes.json();
+      var current = catalog.songs.find(function(s){ return s.id === feat.id; });
+      liveEl.textContent = current ? current.title : feat.id;
+      if(current) select.value = current.id;
+    } catch(e){
+      liveEl.textContent = 'unable to load';
+    }
+  }
+
+  document.getElementById('set-featured-btn').addEventListener('click', async function(){
+    var msg = document.getElementById('feature-msg');
+    var btn = this;
+    var select = document.getElementById('song-select');
+    var conn = getConnection();
+    var chosenId = select.value;
+
+    btn.disabled = true;
+    msg.className = 'msg';
+    msg.textContent = 'Updating…';
+    msg.classList.remove('hidden');
+
+    try {
+      var apiBase = 'https://api.github.com/repos/' + conn.owner + '/' + conn.repo + '/contents/featured.json';
+      var headers = {
+        'Authorization': 'Bearer ' + conn.token,
+        'Accept': 'application/vnd.github+json'
+      };
+
+      // 1) Get the current file's sha (required by GitHub to update an existing file)
+      var getRes = await fetch(apiBase + '?ref=' + encodeURIComponent(conn.branch), { headers: headers });
+      if(!getRes.ok){ throw new Error('Could not read featured.json (status ' + getRes.status + '). Check owner/repo/branch/token.'); }
+      var getData = await getRes.json();
+
+      // 2) Build the new content
+      var newContent = JSON.stringify({ id: chosenId, updatedAt: new Date().toISOString() }, null, 2) + '\n';
+      var encoded = btoa(unescape(encodeURIComponent(newContent)));
+
+      // 3) Commit the update
+      var putRes = await fetch(apiBase, {
+        method: 'PUT',
+        headers: Object.assign({ 'Content-Type': 'application/json' }, headers),
+        body: JSON.stringify({
+          message: 'Set featured song: ' + chosenId,
+          content: encoded,
+          sha: getData.sha,
+          branch: conn.branch
+        })
+      });
+
+      if(!putRes.ok){
+        var errBody = await putRes.json().catch(function(){ return {}; });
+        throw new Error(errBody.message || ('GitHub rejected the update (status ' + putRes.status + ')'));
+      }
+
+      msg.className = 'msg ok';
+      msg.textContent = 'Done. The homepage will show this song within about a minute.';
+      showFeatureCard();
+    } catch(err){
+      msg.className = 'msg err';
+      msg.textContent = 'Error: ' + err.message;
+    } finally {
+      btn.disabled = false;
+    }
+  });
+})();
+</script>
+</body>
+</html>

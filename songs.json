@@ -1,0 +1,120 @@
+{
+  "album": "This Is What The City Sounds Like — Vol. II",
+  "albumSubtitle": "Songs for what you don't say out loud.",
+  "albumCover": "vol2-cover.jpg",
+  "albumSpotifyUrl": "https://open.spotify.com/album/2KskFhLLuUChwbovUCqtnR",
+  "albumAnchor": "#project",
+  "artist": "Hit James",
+  "songs": [
+    {
+      "id": "name-still-saved",
+      "title": "Name Still Saved",
+      "track": 1,
+      "page": "song-name-still-saved.html",
+      "cover": "vol2-cover.jpg",
+      "tagline": "Some numbers you never delete.",
+      "spotifyTrackId": "6ZEC6wdaRAItbSbXjRytAG",
+      "appleMusicUrl": null
+    },
+    {
+      "id": "i-said-im-straight",
+      "title": "I Said I'm Straight",
+      "track": 2,
+      "page": "song-i-said-im-straight.html",
+      "cover": "vol2-cover.jpg",
+      "tagline": "The answer you give when nobody actually asked.",
+      "spotifyTrackId": "0T00YWl3Rny9hZcj4iPxHE",
+      "appleMusicUrl": null
+    },
+    {
+      "id": "nobody-came",
+      "title": "Nobody Came",
+      "track": 3,
+      "page": "song-nobody-came.html",
+      "cover": "vol2-cover.jpg",
+      "tagline": "The quiet after everybody said they'd show up.",
+      "spotifyTrackId": "7oWlHvLB4TnbJLxXkGmQbk",
+      "appleMusicUrl": null
+    },
+    {
+      "id": "let-it-ring",
+      "title": "Let It Ring",
+      "track": 4,
+      "page": "song-let-it-ring.html",
+      "cover": "vol2-cover.jpg",
+      "tagline": "Some calls you just let go to voicemail.",
+      "spotifyTrackId": "40ijLTUfKxsskim69ESv6E",
+      "appleMusicUrl": null
+    },
+    {
+      "id": "3-17",
+      "title": "3:17",
+      "track": 5,
+      "page": "song-3-17.html",
+      "cover": "vol2-cover.jpg",
+      "tagline": "The hour everything you were avoiding shows up.",
+      "spotifyTrackId": "4vpoxR4b95feks7C95ipmd",
+      "appleMusicUrl": null
+    },
+    {
+      "id": "last-time-we-talked",
+      "title": "Last Time We Talked",
+      "track": 6,
+      "page": "song-last-time-we-talked.html",
+      "cover": "vol2-cover.jpg",
+      "tagline": "Still thinking about how that conversation ended.",
+      "spotifyTrackId": "2eWfzwSVZxFT42LLmQwTAi",
+      "appleMusicUrl": null
+    },
+    {
+      "id": "the-funny-one",
+      "title": "The Funny One",
+      "track": 7,
+      "page": "song-the-funny-one.html",
+      "cover": "vol2-cover.jpg",
+      "tagline": "Everybody's got a role in the group chat.",
+      "spotifyTrackId": "7xbmzfBrDz3RHNdteCZyd3",
+      "appleMusicUrl": null
+    },
+    {
+      "id": "my-lil-yea",
+      "title": "My Lil Yea",
+      "track": 8,
+      "page": "song-my-lil-yea.html",
+      "cover": "vol2-cover.jpg",
+      "tagline": "Say it how the city says it.",
+      "spotifyTrackId": "099uNBcz0eqbKBvGdcKvDd",
+      "appleMusicUrl": null
+    },
+    {
+      "id": "the-system-work",
+      "title": "The System Work",
+      "track": 9,
+      "page": "song-the-system-work.html",
+      "cover": "vol2-cover.jpg",
+      "tagline": "Somebody's gotta keep it moving.",
+      "spotifyTrackId": "6P71QTqORXxDv7vnzMJ9pJ",
+      "appleMusicUrl": null
+    },
+    {
+      "id": "when-you-mad-at-god",
+      "title": "When You Mad At God?",
+      "track": 10,
+      "page": "song-when-you-mad-at-god.html",
+      "cover": "vol2-cover.jpg",
+      "tagline": "The questions you don't say out loud in church.",
+      "spotifyTrackId": "7757Dlv9O4t1V5I4UTU3wg",
+      "appleMusicUrl": null
+    },
+    {
+      "id": "same-dream",
+      "title": "Same Dream",
+      "track": 11,
+      "page": "song-same-dream.html",
+      "cover": "vol2-cover.jpg",
+      "tagline": "Still chasing the one that woke you up at 17.",
+      "spotifyTrackId": "4AYLpasMVQB9bgn58HPB9K",
+      "appleMusicUrl": null
+    }
+  ]
+}
