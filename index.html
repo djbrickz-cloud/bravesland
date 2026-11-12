@@ -7,7 +7,7 @@
 <meta name="description" content="Hit James presents &quot;This Is What the City Sounds Like,&quot; a musical snapshot of traffic, culture, pressure, pride and everyday life in Atlanta.">
 <meta property="og:title" content="This Is What the City Sounds Like — Vol. 1">
 <meta property="og:description" content="Hit James presents a musical snapshot of traffic, culture, pressure, pride and everyday life in Atlanta.">
-<meta property="og:image" content="vol2-cover.jpg">
+<meta property="og:image" content="https://bravesland.com/system-work-cover.jpg">
 <meta property="og:type" content="website">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -693,6 +693,15 @@
   @media(min-width:768px){
     .section{ padding:130px 40px; }
   }
+
+  /* Original clean white aesthetic: fully visible illustration with soft fade. */
+  .cover { overflow:hidden; background:radial-gradient(ellipse at 50% 25%,rgba(227,168,61,.09),transparent 60%),#fff; }
+  .hero-mark { width:min(320px,76vw);height:auto;object-fit:contain;max-height:none;filter:none;
+    -webkit-mask-image:linear-gradient(to bottom,#000 0%,#000 80%,transparent 100%);
+    mask-image:linear-gradient(to bottom,#000 0%,#000 80%,transparent 100%); }
+  .system-work-player { display:block; margin-top:22px;max-width:520px;border:0;border-radius:12px; }
+  .featured-art img {object-fit:contain;background:#fff;}
+
 </style>
 </head>
 <body>
@@ -740,14 +749,11 @@
   <section class="cover">
     <div class="cover-overlay"></div>
     <div class="cover-content">
-      <img src="hitjames-mark.png" alt="Hit James — This Is What The City Sounds Like Vol. 2" class="hero-mark">
+      <img src="hitjames-mark.png" alt="Hit James artist illustration" class="hero-mark">
       <div class="kicker">Hit James Presents</div>
-      <h1>This Is What The City Sounds Like<span class="cover-vol">Vol. 2</span></h1>
-      <p class="cover-sub">Real Atlanta. Real conversations. One city caught on record.</p>
-      <div class="cover-ctas">
-        <a href="#project" id="project-stream-link" class="btn btn-primary">▶ Listen to the Project</a>
-        <a href="#subscribe" class="btn btn-outline">Join ATL First</a>
-      </div>
+      <h1>System Work<span class="cover-vol">New release · Hit James</span></h1>
+      <p class="cover-sub">The latest release from Hit James. Start with the music, then explore the catalog.</p>
+      <div class="cover-ctas"><a href="https://open.spotify.com/track/6P71QTqORXxDv7vnzMJ9pJ" class="btn btn-primary" target="_blank" rel="noopener">▶ Listen to System Work</a><a href="#featured-song" class="btn btn-outline">Preview Here</a></div>
       <p class="cover-discovery">Catch up: <a href="https://hypeddit.com/820rwp" target="_blank" rel="noopener">Hear Vol. 1 →</a> · <a href="https://hypeddit.com/w54y5o" target="_blank" rel="noopener">Hear "Atlanta Full" →</a></p>
     </div>
   </section>
@@ -757,14 +763,15 @@
     <div class="featured-label">★ Featured Song</div>
     <div class="featured-grid" id="featured-content">
       <div class="featured-art">
-        <img id="featured-cover" src="3-17-cover.png" alt="Featured song cover art" loading="lazy">
+        <img id="featured-cover" src="system-work-cover.jpg" alt="Featured song cover art" loading="lazy">
       </div>
       <div>
-        <div class="featured-title" id="featured-title">Loading…</div>
+        <div class="featured-title" id="featured-title">System Work</div>
         <div class="featured-artist" id="featured-artist">Hit James</div>
         <p class="featured-tagline" id="featured-tagline"></p>
         <div class="featured-ctas" id="featured-ctas"></div>
-        <p class="featured-back">From <em>This Is What The City Sounds Like — Vol. II</em> · <a href="#project">Hear the full album ↓</a></p>
+        <iframe class="system-work-player" src="https://open.spotify.com/embed/track/6P71QTqORXxDv7vnzMJ9pJ?utm_source=generator" title="System Work — Spotify player" width="100%" height="152" frameborder="0" loading="lazy" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
+        <p class="featured-back">Keep listening: <a href="#project">Explore the Hit James catalog ↓</a></p>
       </div>
     </div>
   </section>
@@ -1122,11 +1129,11 @@
     }).catch(function(){
       // If the data files can't be reached for any reason, don't leave a broken "Loading…"
       // state — quietly fall back to the initial featured song so the section still works.
-      elTitle.textContent = 'Nobody Came';
+      elTitle.textContent = 'System Work';
       elArtist.textContent = 'Hit James';
-      elTagline.textContent = "The quiet after everybody said they'd show up.";
-      elCover.src = '3-17-cover.png';
-      buildCtas({ title:'Nobody Came', page:'song-nobody-came.html', spotifyTrackId:'7oWlHvLB4TnbJLxXkGmQbk' }, { albumAnchor:'#project' });
+      elTagline.textContent = "New release. Press play and hear it for yourself.";
+      elCover.src = 'system-work-cover.jpg';
+      buildCtas({ title:'System Work', page:'song-system-work.html', spotifyTrackId:'6P71QTqORXxDv7vnzMJ9pJ' }, { albumAnchor:'#project' });
     });
   })();
   </script>

@@ -115,6 +115,16 @@
       "tagline": "Still chasing the one that woke you up at 17.",
       "spotifyTrackId": "4AYLpasMVQB9bgn58HPB9K",
       "appleMusicUrl": null
+    },
+    {
+      "id": "system-work",
+      "title": "System Work",
+      "track": null,
+      "page": "song-system-work.html",
+      "cover": "system-work-cover.jpg",
+      "tagline": "New release. Press play and hear it for yourself.",
+      "spotifyTrackId": "6P71QTqORXxDv7vnzMJ9pJ",
+      "appleMusicUrl": null
     }
   ]
 }
